@@ -3,6 +3,11 @@ import TicketsList from "./TicketsList";
 import { Suspense } from "react";
 
 
+export const metadata = {
+  title: 'ADO | Tickets Page'
+}
+
+
 export default function Tickets() {
   return (
     <main>

@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
-import Logo from './dojo-logo.png'
+import Logo from './Logo-fotor-bg-remover-2023051319917.png'
 import Image from 'next/image'
 
 export default function Navbar() {
@@ -9,12 +9,13 @@ export default function Navbar() {
         <Image 
         src= {Logo}
         alt = 'Dojo'
-        width ={70}
+        width ={150}
         quality = {100}
+        placeholder='blur'
         />
       <Link href= "/">Dashboard</Link>
         <Link href= "/tickets">Tickets</Link>
-        <button className='bg-primary text-white;'>
+        <button className='bg-primary text-white; rounded-tl-md'>
         <Link href= "/tickets/create">Add Ticket</Link>
         </button>
     </div>
