@@ -3,8 +3,10 @@
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
+// import { useParams } from "next/navigation"
 
-export default function CreateForm() {
+
+export default function UpdateForm({ id }) {
 
 const router = useRouter()
 
@@ -24,9 +26,10 @@ const ticket ={
     body: body,
     priority: priority,
 }
-console.log(ticket)
-const res = await fetch('http://localhost:3000/api/tickets', {
-    method: "POST",
+// console.log(ticket)
+
+const res = await fetch(`http://localhost:3000/api/tickets/${id}`, {
+    method: "PATCH",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify(ticket)
 
@@ -46,9 +49,14 @@ if(json.data){
 }
 
   return (
+    
    <form onSubmit={handleSubmit} className="w-1/2">
 
+    <h2>Update {id}</h2>
+
 <label>
+
+
         <span>Title:</span>
         <input
           required 
@@ -80,8 +88,8 @@ if(json.data){
         className="btn-primary" 
         disabled={isLoading}
       >
-      {isLoading && <span>Adding...</span>}
-      {!isLoading && <span>Add Ticket</span>}
+      {isLoading && <span>Updating...</span>}
+      {!isLoading && <span>Update Ticket</span>}
     </button>
    </form>
   )

@@ -1,16 +1,20 @@
 import Link from "next/link"
 import NotFound from "./not-found"
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
+import { cookies } from "next/headers"
 
 async function getTickets() {
 
-  await new Promise (resolve =>{setTimeout(resolve, 3000)})
-    const res = await fetch('http://localhost:4000/tickets', {
-      next: {
-        revalidate: 0
-      }
-    })
+  const supabase = createServerComponentClient({ cookies })
 
-  return res.json()
+  const { data, error } = await supabase.from('tickets')
+  .select()
+ 
+  if(error){
+    console.log(error.message)
+  }
+
+  return data;
 }
 
 export default async function TicketsList() {
@@ -27,6 +31,7 @@ export default async function TicketsList() {
         relative 
         overflow-hidden;">
              <Link href={`/tickets/${ticket.id}`}>
+              
             <h3 className="font-bold text-gray-700 text-sm 
       mb-0;">
     

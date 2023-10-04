@@ -1,9 +1,21 @@
-import Navbar from "../components/Navbar"
 
-export default function DashboardLayout({ children }) {
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
+import { cookies } from "next/headers"
+import Navbar from "../components/Navbar"
+import { redirect } from "next/navigation"
+
+export default async function DashboardLayout({ children }) {
+
+const supabase = createServerComponentClient({ cookies })
+const { data } = await supabase.auth.getSession()
+
+if(!data.session){
+  redirect('/login')
+}
+
   return (
     <>
-     <Navbar className= "flex flex-row gap-7 items-['flex-start']" />
+     <Navbar className= "flex flex-row gap-7 items-['flex-start']"  user={data.session.user}/>
        {children}
     </>
   )

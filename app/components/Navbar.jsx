@@ -2,10 +2,11 @@ import Link from 'next/link'
 import React from 'react'
 import Logo from './Logo-fotor-bg-remover-2023051319917.png'
 import Image from 'next/image'
+import LogoutButton from './LogoutButton'
 
-export default function Navbar() {
+export default function Navbar({ user }) {
   return (
-    <div className='flex flex-row gap-6 items-center'>
+    <nav className='flex flex-row gap-6 items-center'>
         <Image 
         src= {Logo}
         alt = 'Dojo'
@@ -14,10 +15,15 @@ export default function Navbar() {
         placeholder='blur'
         />
       <Link href= "/">Dashboard</Link>
-        <Link href= "/tickets">Tickets</Link>
-        <button className='bg-primary text-white; rounded-tl-md'>
+        <Link href= "/tickets" className='mr-auto'>Tickets</Link>
+
+
+        <button className="btn-primary">
         <Link href= "/tickets/create">Add Ticket</Link>
         </button>
-    </div>
+        {user &&  <span>Hello, {user.email}</span>}
+
+        <LogoutButton />
+    </nav>
   )
 }
