@@ -2,7 +2,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import DelButton from "./DelButton"
 import { notFound } from "next/navigation"
-import UpdateButton from "./update/UpdateButton"
+import Link from "next/link"
 
 
 export const dynamicParams = true
@@ -49,31 +49,7 @@ export default  async function TicketDetails({ params }) {
 
   // const id = params.id
 
-async function updateTicket({ params }){
-
-    const id = params.id
-    const title = params.title
-    const body = params.body
-    const priority = params.priority
-
-    if (!id || !title || !body || !priority) {
-        return NextResponse.error('Missing required parameters.');
-      }
-
-    const supabase = createRouteHandlerClient({ cookies })
-
-    const { data, error } = await supabase.from('tickets')
-    .update({
-        title,body,priority
-    })
-    .eq('id', id)
-    .select()
-
-    return NextResponse.json({
-        data,
-        error
-    })
-}
+  
   return (
     <main>
       <nav>
@@ -85,13 +61,7 @@ async function updateTicket({ params }){
             </>
           )}
         </div>
-        <div className="ml-auto">
-          {data.session.user.email  === ticket.user_email && (
-            <>
-          <UpdateButton />
-            </>
-          )}
-        </div>
+<Link href={`/tickets/${ticket.id}/update`} className="text-primary underline">Update</Link>
         </nav>
 
         <div className="bg-white 

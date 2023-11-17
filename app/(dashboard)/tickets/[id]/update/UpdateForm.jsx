@@ -3,16 +3,18 @@
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
-// import { useParams } from "next/navigation"
 
 
-export default function UpdateForm({ id }) {
+
+
+
+export default function UpdateForm({ id, title, body, priority }) {
 
 const router = useRouter()
 
-const [title, setTitle] = useState('')
-const [body, setBody] = useState('')
-const [priority, setPriority] = useState('low')
+const [Istitle, setTitle] = useState(title)
+const [Isbody, setBody] = useState(body)
+const [Ispriority, setPriority] = useState(priority)
 const [isLoading, setIsloading] = useState(false)
 
 
@@ -21,17 +23,16 @@ e.preventDefault()
 
 setIsloading(true)
 
-const ticket ={
-    title: title,
-    body: body,
-    priority: priority,
+const Updatedticket ={
+  title: Istitle,
+  body: Isbody,
+  priority: Ispriority,
 }
-// console.log(ticket)
 
-const res = await fetch(`http://localhost:3000/api/tickets/${id}`, {
+const res = await fetch(`http://localhost:3000/api/tickets/${id}/update`, {
     method: "PATCH",
     headers: {"Content-Type": "application/json"},
-    body: JSON.stringify(ticket)
+    body: JSON.stringify(Updatedticket)
 
 })
 
@@ -44,7 +45,9 @@ if(json.error){
 if(json.data){
   router.refresh()
   router.push('/tickets')
+  
 }
+
 
 }
 
@@ -52,7 +55,7 @@ if(json.data){
     
    <form onSubmit={handleSubmit} className="w-1/2">
 
-    <h2>Update {id}</h2>
+    <h2>Update-{id}</h2>
 
 <label>
 
@@ -62,7 +65,7 @@ if(json.data){
           required 
           type="text"
           onChange={(e) => setTitle(e.target.value)}
-          value={title}
+          value={Istitle}
         />
       </label>
       <label>
@@ -70,14 +73,14 @@ if(json.data){
         <textarea
           required
           onChange={(e) => setBody(e.target.value)}
-          value={body}
+          value={Isbody}
         />
       </label>
       <label>
         <span>Priority:</span>
         <select 
           onChange={(e) => setPriority(e.target.value)}
-          value={priority}
+          value={Ispriority}
         >
           <option value="low">Low Priority</option>
           <option value="medium">Medium Priority</option>

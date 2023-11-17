@@ -36,28 +36,36 @@ export async function DELETE (_, { params }){
 }
 
 
-// export async function PATCH(_, { params }){
+export async function PATCH(_, { params }){
 
-//     const id = params.id
-//     const title = params.title
-//     const body = params.body
-//     const priority = params.priority
+    const id = params.id
+    const title = params.title
+    const body = params.body
+    const priority = params.priority
 
-//     if (!id || !title || !body || !priority) {
-//         return NextResponse.error('Missing required parameters.');
-//       }
 
-//     const supabase = createRouteHandlerClient({ cookies })
+    if (!id || !title || !body || !priority) {
+        return NextResponse.error('Missing required parameters.');
+      }
+    
+    const supabase = createRouteHandlerClient({ cookies })
 
-//     const { data, error } = await supabase.from('tickets')
-//     .update({
-//         title,body,priority
-//     })
-//     .eq('id', id)
-//     .select()
+    const { data, error } = await supabase.from('tickets')
+    .update({
+        title: title,
+        body: body,
+        priority: priority
+    })
+    .eq('id', id)
+    .select()
+    .single()
 
-//     return NextResponse.json({
-//         data,
-//         error
-//     })
-// }
+    return NextResponse.json({
+        data,
+        error
+    })
+}
+
+// const res =  await fetch (`http://localhost:3000/tickets/${id}/update`)
+
+    
